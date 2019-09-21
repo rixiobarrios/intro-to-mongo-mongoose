@@ -81,7 +81,7 @@ If you're coming from a background where you are used to thinking of data in ter
 
 ## Install Mongo
 
-We already installed Mongo, if you need to reinstall, [follow the directions here](https://git.generalassemb.ly/Web-Development-Immersive-Remote/WDIR-Outrun/wiki/New-Computer-Setup#install-mongo)
+We already installed Mongo, if you need to reinstall, [follow the directions here](https://git.generalassemb.ly/seir-826/w05d01-intro-to-mongo-mongoose/blob/master/install-mongo.md)
 
 ## Get Mongo Running
 
