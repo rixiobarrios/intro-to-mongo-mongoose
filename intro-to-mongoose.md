@@ -48,15 +48,14 @@ const articleSchema = new Schema(
 
 ## Basic Set Up
 
-In `student_examples`
-
-- `mkdir intro_to_mongoose`
+- Clone this repo
+- Create a new directory: `mkdir intro_to_mongoose`
 - `cd intro_to_mongoose`
 - `touch app.js`
 - `npm init -y` and go through the prompts
 - `npm i mongoose`
 - `touch tweet.js`
-- `atom .`
+- `code .`
 
 ## Set Up Mongoose
 
