@@ -198,7 +198,7 @@ show collections
 
 ## Create, Read, Update and Delete Documents
 
-We've been creating, reading, updating and deleting our 'data' in our Express apps. Now let's learn how to do it using Mongo.
+Let's learn how to create, read, update, and delete documents using Mongo.
 
 Remember: users are not going to open a Mongo shell and type everything we're going to type. We'll eventually be building apps to interact with our database.
 
