@@ -1,1 +1,1 @@
-# w05d01-intro-to-mongo-mongoose
+# w05d02-intro-to-mongo-mongoose
