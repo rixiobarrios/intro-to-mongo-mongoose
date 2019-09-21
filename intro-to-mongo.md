@@ -2,35 +2,29 @@
 
 ## Lesson Objectives
 
-1. Describe what is a Database
-1. Describe what is Mongo
+1. Describe a Database
+1. Describe Mongo
 1. Understand the difference between a Mongo database, sub-database, collection, and document
 1. Get Mongo running
 1. List sub-databases
-1. choose a sub-database
-1. create a collection
-1. insert a document
-1. insert multiple documents
-1. query the collection
-1. remove a set of documents
-1. update a set of documents
-1. drop a Collection or sub-database
+1. Choose a sub-database
+1. Create a collection
+1. Insert a document
+1. Insert multiple documents
+1. Query the collection
+1. Remove a set of documents
+1. Update a set of documents
+1. Drop a Collection or sub-database
 
-# What is a Database
+# What is a Database?
 
 A database is an organized collection of data, stored and accessed electronically.
 
-For our CRUD apps so far we've been hard coding some data. We've been able to make temporary changes, but as soon as we shut down our servers, those changes are gone.
-
-We need a way to make our data persist.
-
-We'll do that by storing/accessing our data from a database.
-
-There are many databases. A common type is a SQL(Structured Query Language) database which stores data in tables and rows, much like an excel spreadsheet/google sheet.
+There are many kinds of databases. A common type is a SQL(Structured Query Language) database which stores data in tables and rows, much like an excel spreadsheet/google sheet.
 
 Another type of database is a NoSQL(Not Only SQL) database, which follows a different structure. In our case, we'll be using MongoDB which will store our data in objects (just as we've been seeing with our mock databases)
 
-## What is Mongo
+## What is Mongo?
 
 MongoDB is a database that holds JavaScript Objects. The database itself is an application that runs quietly on a computer and waits for connections that make requests and then sends responses (much like a web server).
 
@@ -52,7 +46,7 @@ Here is a way you _COULD_ split up sub-databases for an app
 
 # Mongo Collections and Documents
 
-MongoDB is considered a NoSQL (not only SQL, non SQL or non relational), rather than storing things in tables with rows and columns, NoSQL databases use other means. In the case of MongoDB, data is stored in JavaScript objects.
+MongoDB is considered a NoSQL (not only SQL, non SQL or non relational). Rather than storing data in tables with rows and columns, NoSQL databases use other means of storing data. In the case of MongoDB, data is stored in JavaScript objects.
 
 A collection is a set of documents. Documents are a set of data records. This is very abstract. Let's use a simplified real world example of an address book.
 
@@ -69,7 +63,7 @@ Here is one document:
 
 ```
 
-A collection, would be many documents: In our case, many contacts.
+A collection would be many documents: In our case, many contacts.
 
 Remember: having a collection of documents sounds quite reasonable. But having a document of collections is ... kind of odd.
 
