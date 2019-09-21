@@ -145,6 +145,7 @@ db.on("error", err => console.log(err.message + " is Mongod not running?"));
 db.on("connected", () => console.log("mongo connected: ", mongoURI));
 db.on("disconnected", () => console.log("mongo disconnected"));
 ```
+Run ```node app.js``` to connect to your database.
 
 ## Set Up Tweet Schema
 
