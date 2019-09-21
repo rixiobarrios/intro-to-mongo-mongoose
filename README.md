@@ -1,1 +1,1 @@
-# w05d01-promises-and-databases
+# w05d01-intro-to-mongo-mongoose
