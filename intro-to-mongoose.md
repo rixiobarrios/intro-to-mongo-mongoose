@@ -184,7 +184,7 @@ module.exports = Tweet;
 
 In `app.js`
 
-Let's make ourselves an object to insert into our database. When we connect with an express app, our data will be coming in as an object from the browser.
+Let's make ourselves an object to insert into our database. 
 
 ```js
 const myFirstTweet = {
@@ -340,7 +340,7 @@ We have two copies of our first tweet and a few options to delete it
 
 - `remove()` danger! Will remove all instances
 - `findOneAndRemove()` - this seems like a great choice
-- `.findByIdAndRemove()`- finds by ID - great for delete routes in an express app!
+- `.findByIdAndRemove()`- finds by ID - great for delete routes!
 
 ```js
 Tweet.findOneAndRemove({ title: "Deep Thoughts" }, (err, tweet) => {
@@ -359,7 +359,7 @@ Finally, we have a few options for updating
 
 - `update()` - the most generic one
 - `findOneAndUpdate()`- Let's us find one and update it
-- `findByIdAndUpdate()` - Let's us find by ID and update - great for update/put routes in an express app!
+- `findByIdAndUpdate()` - Let's us find by ID and update - great for update/put routes!
 
 If we want to have our updated document returned to us in the callback, we have to set an option of `{new: true}` as the third argument
 
