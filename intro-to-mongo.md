@@ -22,7 +22,7 @@ A database is an organized collection of data, stored and accessed electronicall
 
 There are many kinds of databases. A common type is a SQL(Structured Query Language) database which stores data in tables and rows, much like an excel spreadsheet/google sheet.
 
-Another type of database is a NoSQL(Not Only SQL) database, which follows a different structure. In our case, we'll be using MongoDB which will store our data in JSON-like documents (just as we've been seeing with our mock databases)
+Another type of database is a NoSQL(Not Only SQL) database, which follows a different structure. In our case, we'll be using MongoDB which will store our data in JSON-like documents.
 
 ## What is Mongo?
 
