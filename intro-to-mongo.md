@@ -48,7 +48,7 @@ Here is a way you _COULD_ split up sub-databases for an app
 
 MongoDB is considered a NoSQL (not only SQL, non SQL or non relational). Rather than storing data in tables with rows and columns, NoSQL databases use other means of storing data. In the case of MongoDB, data is stored in JavaScript objects.
 
-A collection is a set of documents. Documents are a set of data records. This is very abstract. Let's use a simplified real world example of an address book.
+A MongoDB database consists of collections of documents. A collection is a set of documents. Documents are a set of data records. This is very abstract. Let's use a simplified real world example of an address book.
 
 Here is one document:
 
