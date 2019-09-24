@@ -53,6 +53,7 @@ A collection is a set of documents. Documents are a set of data records. This is
 Here is one document:
 
 ```js
+{
  firstName: "Jennifer",
  lastName: "Juniper",
  address: "Upon the Hill",
@@ -60,7 +61,7 @@ Here is one document:
  telephone: "867-5309",
  birthday: "June 8, 1968",
  email: "jenny.juniper@juno.net"
-
+}
 ```
 
 A collection would be many documents: In our case, many contacts.
