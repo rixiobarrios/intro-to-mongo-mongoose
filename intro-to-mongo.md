@@ -2,53 +2,34 @@
 
 ## Lesson Objectives
 
-1. Describe a Database
-1. Describe Mongo
-1. Understand the difference between a Mongo database, sub-database, collection, and document
-1. Get Mongo running
-1. List sub-databases
-1. Choose a sub-database
-1. Create a collection
-1. Insert a document
-1. Insert multiple documents
-1. Query the collection
-1. Remove a set of documents
-1. Update a set of documents
-1. Drop a Collection or sub-database
+1. Describe the purpose of databases in web application development.
+1. Distinguish between the database server, a database, a collection and a document in MongoDB.
+1. Create, drop and interact with MongoDB databases and collections using the MongoDB shell.
+1. Create, Read, Update, and Delete documents in MongoDB collections using the MongoDB shell.
 
 # What is a Database?
 
-A database is an organized collection of data, stored and accessed electronically.
+A database is an organized collection of data, stored and accessed electronically.  There are many kinds of databases. A common type is a RDBMS (relational database management system).  Relational databases are frequently based on SQL (Structured Query Language)  and store data in tables and rows, much like an Excel spreadsheet/Google Sheet.
 
-There are many kinds of databases. A common type is a SQL(Structured Query Language) database which stores data in tables and rows, much like an excel spreadsheet/google sheet.
-
-Another type of database is a NoSQL(Not Only SQL) database, which follows a different structure. In our case, we'll be using MongoDB which will store our data in JSON-like documents.
+Another type of database is a NoSQL database, which don't store data in rows and columns.  In this unit, we'll be using MongoDB which is a very popular NoSQL database for building web applications, and in particular, building web applications that need to store a lot of data.
 
 ## What is Mongo?
 
-MongoDB is a database that holds JSON-like documents. The database itself is an application that runs quietly on a computer and waits for connections that make requests and then sends responses (much like a web server).
+MongoDB is a specific type of NoSQL database system called a  **document database**.  It stores data in a format called BSON, which is a JSON-like format. One of the key benefit of this format is that it is very easy to work with using JavaScript because it so closely resembles plain old JavaScript objects!
 
-Mongo is designed to be a database that is flexible and easily scalable.
+MongoDB is also much more scalable than relational databases due to this mechanism of data storage.  It means that we can store the data easily across many physical pieces of hardware since each "record", is a separate and distinct "document".
 
-[Our Cheatsheet](https://blog.codecentric.de/files/2012/12/MongoDB-CheatSheet-v1_0.pdf)
+## MongoDB Databases, Collections and Documents
 
-## Mongo Sub-Databases
+MongoDB is an application that runs as a **server** and can have many separate databases within it.
 
-You can have multiple smaller databases stored and available in Mongo.
+Each MongoDB **database** consists of collections.
 
-Imagine a company like Google, they would have multiple databases: one for mail, one for maps, one for drive documents...
+Each **collection** is a set of documents.
 
-For us, we'll have multiple sub-databases, typically one for each lesson, homework and project.
+Each **document** contains a set of data and attributes, known as fields.
 
-Here is a way you _COULD_ split up sub-databases for an app
-
-![sub database example](https://i.imgur.com/rHgjaUM.png)
-
-# Mongo Collections and Documents
-
-MongoDB is considered a NoSQL (not only SQL, non SQL or non relational). Rather than storing data in tables with rows and columns, NoSQL databases use other means of storing data. In the case of MongoDB, data is stored in JavaScript objects.
-
-A MongoDB database consists of collections of documents. A collection is a set of documents. Documents are a set of data records. This is very abstract. Let's use a simplified real world example of an address book.
+This is very abstract. Let's use a simplified real world example of an address book.
 
 Here is one document:
 
@@ -68,82 +49,33 @@ A collection would be many documents: In our case, many contacts.
 
 Remember: having a collection of documents sounds quite reasonable. But having a document of collections is ... kind of odd.
 
-If you're coming from a background where you are used to thinking of data in terms of columns and rows, reading the following could be helpful in transitioning into this new way of modeling data:
+> If you're coming from a background where you are used to thinking of data in terms of columns and rows, then you can correlate a table (or worksheet) to the collections, a row to the documents and columns to the fields in MongoDB.
 
-[Thinking in Documents Part 1](https://www.mongodb.com/blog/post/thinking-documents-part-1?jmp=docs&_ga=2.202168721.1294830246.1530196908-30583944.1529350623)
+## Make sure Mongo is Running
 
-[Thinging in Documents Part 2](https://www.mongodb.com/blog/post/thinking-documents-part-2)
-
-## Install Mongo
-
-We already installed Mongo, if you need to reinstall, [follow the directions here](https://git.generalassemb.ly/seir-826/w05d01-intro-to-mongo-mongoose/blob/master/install-mongo.md)
-
-## Get Mongo Running
-
-Let's use three terminal tabs. One to keep bash open and available, open a new one to start `mongod` and one more to run the mongo shell.
-
-In terminal, type `mongod`
-
-A bunch of text should come up, but in version 3.6.3, the final line says
-
-![last line of successful mongod](https://i.imgur.com/F8hXqwB.png)
-
-<details><summary>Server is Running All the stuff</summary>
-
-![mongod running successfully](https://i.imgur.com/auSdPvf.png)
-
-</details>
-
-## Connect to Mongo
-
-There are a few ways to connect to Mongo. In this course, there will be two main ways:
-
-- Through terminal in a shell
-- Through node using an npm module called `mongoose`
+Let's [follow the instructions](https://git.generalassemb.ly/seir-129/mongo-install-homework#verify-that-mongodb-is-installed) in last night's homework to make sure that our MongoDB server is running locally.  If it's not started (or if you're on a MacOS and started appears in yellow not green), restart your server now.
 
 ## Connect via Mongo Shell
 
-Open a second terminal tab (do not shut `mongod` tab down), (shortcut key: `command t`)
+To access our MongoDB directly, we can type `mongo` at the command prompt.  This will run a REPL for interacting with MongoDB. When you type `mongo` in the Terminal, you should see a message that tells you the MongoDB shell is running and the prompt will change to a greater than (`>`) character.  If you do not see this, inform an instructor!
 
-type `mongo`
-
-A bunch of text should come up, but in version 3.6.3, the final line should have changed from a bash prompt `$` to a `>`
-
-![Mongo Shell Ready to type](https://i.imgur.com/8ZFoWx2.png)
-
-<details><summary>Mongo Shell is Running All the stuff</summary>
-
-![mongo running successfully](https://i.imgur.com/SyN6fWN.png)
-
-</details>
-
-## Connect/Create to a Sub-Database
+## Connect/Create to a Database
 
 Let's keep working on our Mongo Shell.
 
-Let's see what sub-databases we have available to us:
+Let's see what databases we have available to us:
 
-`show dbs`
+```
+show dbs
+```
 
-<details><summary>Sample Appearances of Sub Databases</summary>
+We want to create and use a database called `learn`. With Mongo, if a database doesn't exist and we try to use it, Mongo will automatically create it for us, so we'll type:
 
-![Sample Appearances of Sub Databases](https://i.imgur.com/PUIdcLm.png)
+```
+use learn
+```
 
-</details>
-
-We want to create and use a sub-database called `learn`. With Mongo, if it doesn't exist, Mongo will create it.
-
-Therefore if we type
-
-`use learn`
-
-It will create a sub-database called `learn` and connect to it
-
-<details><summary>Created and Connected to Learn sub-databases</summary>
-
-![create and connect to learn](https://i.imgur.com/ZQ1bck6.png)
-
-</details>
+It will create a database called `learn` and connect to it.
 
 It is likely that our configuration let's us see the db name at our prompt, but in case it doesn't or we want a reminder we can type
 
@@ -183,13 +115,7 @@ Let's go back to our address book example and create a collection of contacts.
 db.createCollection("contacts");
 ```
 
-We should get an ok message, if we've done it correctly.
-
-<details><summary>Created a new collection successfully</summary>
-
-![collection create](https://i.imgur.com/vSsT8oO.png)
-
-</details>
+We should get an `ok` message, if we've done it correctly.
 
 We can see what collections we have by typing
 
@@ -199,17 +125,17 @@ show collections
 
 ## Create, Read, Update and Delete Documents
 
-Let's learn how to create, read, update, and delete documents using Mongo.
+In computer programming, create, read, update, and delete (CRUD) are the four basic functions of persistent storage. Let's learn how to CRUD documents using MongoDB.
 
-Remember: users are not going to open a Mongo shell and type everything we're going to type. We'll eventually be building apps to interact with our database.
+> Obviously users are not going to open a Mongo shell and type everything we're going to type. This lesson is meant to help us understand how MongoDB works.  Eventually be building apps to interact with our database.
 
 ### Insert a document into a Collection (Create)
 
-We'll use the `insert()` method.
-We have to tell mongo where to insert it. We'll do that by chaining it to `db.contacts`
-It takes two arguments.
-The first is always an object of our data.
-The second is optional and can let us choose some specific options.
+- We'll use the `insert()` method.
+- We have to tell MongoDB where to insert it. We'll do that by chaining it to `db.contacts`
+- It takes two arguments.
+- The first is always an object of our data.
+- The second is optional and can let us choose some specific options.
 
 Insert into contacts:
 
@@ -234,12 +160,6 @@ db.contacts.insert({
 ```
 
 We can also type our code in VS Code and when we know it's right, copy and paste it over into our Mongo shell. Go with whatever is easier.
-
-<details><summary>Successful insert</summary>
-
-![Successful insert](https://i.imgur.com/YP59kUi.png)
-
-</details>
 
 Let's go ahead and copy paste this into our Mongo shell to populate our collection with more documents
 
@@ -273,12 +193,6 @@ db.contacts.insert([
 ]);
 ```
 
-<details><summary>Successful insert many</summary>
-
-![Successful insert many](https://i.imgur.com/KkviPPh.png)
-
-</details>
-
 We may notice that our data wasn't consistent.
 
 - Jennifer has a duplicate record
@@ -306,12 +220,6 @@ We may find that to not be as human-readable as we'd like, we can chain another 
 db.contacts.find().pretty();
 ```
 
-<details><summary>Successful find all</summary>
-
-![Find All](https://i.imgur.com/RSRhxbi.png)
-
-</details>
-
 Many times, we don't want to find all.
 
 We might want to just find the names of the people who live in California.
@@ -330,7 +238,7 @@ Let's look for the names of people who are in the state of California, and let's
 db.contacts.find({ state: "California" }, { name: 1, _id: 0 }).pretty();
 ```
 
-### Remove Documents from a Collection(DELETE)
+### Remove Documents from a Collection (DELETE)
 
 Let's remove that duplicate record. We'll use a method called `.remove()`, it takes two arguments, the first is a query (what document are we looking for? - Jennifer's), the second one gives us options
 
@@ -339,12 +247,6 @@ db.contacts.remove({
   name: "Jennifer"
 });
 ```
-
-<details><summary>Ooops two records removed</summary>
-
-![removed two records, oops](https://i.imgur.com/5z4bLmg.png)
-
-</details>
 
 Let's put Jennifer back again twice:
 
@@ -561,17 +463,15 @@ If you need to remove an entire collection
 db.contacts.drop()
 ```
 
-If you need to drop an entire sub-database, while you are connected to the database you want to drop:
+If you need to drop an entire database, while you are connected to the database you want to drop:
 
 ```
 db.dropDatabase()
 ```
 
-### Remember to quit out of Mongo and Mongo Shell when you are done.
+### Exit and Return to the Command Prompt
 
-To quit out of the Mongo shell type `exit`
-
-To quit out of Mongo, press `control c`
+To quit out of the Mongo shell type `exit` or `control c`
 
 ### Bonus Configuration
 
@@ -588,5 +488,3 @@ Turn it off
 ```bash
 echo DBQuery.prototype._prettyShell = false >> ~/.mongorc.js
 ```
-
-Don't turn it off and on this way repeatedly. Take the time to google and find out more about the config file and how to update it and change your configs.
