@@ -2,20 +2,21 @@
 
 ## Lesson Objectives
 
-1. Explain what an ODM is
-1. Connect to Mongo via text editor
-1. Create a Schema for a collection
-1. Create a model and save it
-1. find a specific model
-1. update a model already in the database
-1. remove a model already in the database
-1. combine actions
+1. Describe the purpose of Mongoose in terms of an ODM.
+1. Access and manipulate a MongoDB database from a Javascript program by using Mongoose.
+1. Validate data for storage in MongoDB via a Mongoose Schema.
 
-## Explain what is an ODM/ Intro to Mongoose
+## What is MongooseJS
 
-ODM stand for Object Document Model. It translates the documents in Mongo into upgraded JavaScript Objects that have more helpful methods and properties when used in conjunction with express.
+MongooseJS describes itself as _"elegant mongodb object modeling for node.js"_.  So let's unpack that and see what it actually does.
 
-Rather than use the Mongo shell to create, read, update and delete documents, we'll use an npm package called `mongoose`. Mongoose will allow us to create schemas, do validations and make it easier to interact with Mongo inside an express app.
+One of the chief jobs that MongooseJS does for us is make it easier for us to interact with MongoDB in NodeJS via JavaScript. We'll use MongooseJS to relay all of the requests to and from MongoDB in our NodeJS applications.
+
+Another important job for MongooseJS is to help us structure our data consistently within collections and documents.  We've seen how MongoDB allows us to store our data any way we want.  This can be problematic because it can result in inconsistencies in our data which can introduce bugs in our applications. MongooseJS provides us with more control over the data that goes into our database by allowing us to _**model**_ how the data should look.
+
+MongooseJS acts like a guard against bad data getting into our database by checking the data against a _schema_ (the model of our data) before it passes it to MongoDB.  If the data doesn't match the schema, it  rejects it.
+
+MongooseJS can also do a lot of other helpful things such as: create relationships between data that is stored in different collections and documents; validate and even transform data before or after it is added to the database; and help us query our data more easily and efficiently in JavaScript.
 
 ## Make a Schema
 
@@ -23,9 +24,9 @@ A schema will allow us to set specific keys in our objects. So if we have a key 
 
 We can also specify the datatypes. We can set the datatype of `name` to a `string`, `age` to a `number`, `dateOfBirth` to a Date, `bff` to a Boolean etc.
 
-We can also make some fields required and we can set default values as well.
+We can also make some fields required and we can even set default values.
 
-Here is a sample Schema, with many options. We'll be making a smaller variation of this
+Here is a sample MongooseJS Schema, with many options. We'll be making a smaller variation of this schema during this lesson.
 
 ```js
 const articleSchema = new Schema(
@@ -48,7 +49,7 @@ const articleSchema = new Schema(
 
 ## Basic Set Up
 
-- Clone this repo
+- Change directories to your `sandbox`.
 - Create a new directory: `mkdir intro_to_mongoose`
 - `cd intro_to_mongoose`
 - `touch app.js`
@@ -85,16 +86,15 @@ const db = mongoose.connection;
 mongoose.connect(mongoURI);
 ```
 
-Getting a warning like this?
-![depreciation](https://i.imgur.com/47eb1oo.png)
-
-Warnings are ok, it'll still work, for now. But in later versions it may stop working and you'll have to update your code.
-
-This should clear up the errors:
+Getting a warning? Warnings are ok, it'll still work, for now. But in later versions it may stop working and you'll have to update your code. This should clear up the errors:
 
 ```js
-mongoose.connect(mongoURI, { useNewUrlParser: true }, () => {
-  console.log("the connection with mongod is established");
+mongoose.connect(mongoURI,{
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true
+}, () => {
+  console.log("connection with MongoDB is established");
 });
 ```
 
@@ -103,13 +103,12 @@ mongoose.connect(mongoURI, { useNewUrlParser: true }, () => {
 ```js
 // Connection Error/Success
 // Define callback functions for various events
-db.on("error", err => console.log(err.message + " is mongod not running?"));
-db.on("connected", () => console.log("mongo connected: ", mongoURI));
-db.on("disconnected", () => console.log("mongo disconnected"));
+db.on("error", err => console.log(err.message + " is MongoDB not running?"));
+db.on("connected", () => console.log("MongoDB connected on: ", mongoURI));
+db.on("disconnected", () => console.log("MongoDB disconnected"));
 ```
 
-- While the connection is open, we won't have control of our terminal. If we want to regain control, we have to close the connection.
-  Let's set leave the connection open for 5 seconds to demonstrate that the app will hang and then we'll get our close message.
+- While the connection is open, we won't have control of our terminal. If we want to regain control, we have to close the connection. Let's set leave the connection open for 5 seconds to demonstrate that the app will hang and then we'll get our close message.
 
 Otherwise we have to press `control c`. When we run an express app, we typically want to leave the connection open, we don't need to get control of terminal back, we just let the app run.
 
@@ -135,17 +134,22 @@ const mongoURI = "mongodb://localhost:27017/" + "tweets";
 const db = mongoose.connection;
 
 // Connect to Mongo
-mongoose.connect(mongoURI, { useNewUrlParser: true }, () => {
-  console.log("the connection with mongod is established");
+mongoose.connect(mongoURI,{
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true
+}, () => {
+  console.log("the connection with MongoDB is established");
 });
 
 // Connection Error/Success - optional but can be helpful
 // Define callback functions for various events
-db.on("error", err => console.log(err.message + " is Mongod not running?"));
-db.on("connected", () => console.log("mongo connected: ", mongoURI));
-db.on("disconnected", () => console.log("mongo disconnected"));
+db.on("error", err => console.log(err.message + " is MongoDB not running?"));
+db.on("connected", () => console.log("MongoDB connected on: ", mongoURI));
+db.on("disconnected", () => console.log("MongoDB disconnected"));
 ```
-Run ```node app.js``` to connect to your database.
+
+Run `node app.js` to connect to your database.
 
 ## Set Up Tweet Schema
 
@@ -184,7 +188,7 @@ module.exports = Tweet;
 
 In `app.js`
 
-Let's make ourselves an object to insert into our database. 
+Let's make ourselves an object to insert into our database.
 
 ```js
 const myFirstTweet = {
@@ -193,6 +197,8 @@ const myFirstTweet = {
   author: "Karolin"
 };
 ```
+
+Then we'll use Mongoose to create a Tweet:
 
 ```js
 Tweet.create(myFirstTweet, (error, tweet) => {
@@ -209,12 +215,24 @@ Tweet.create(myFirstTweet, (error, tweet) => {
 });
 ```
 
-Let's run this with
-`node app.js`
+Let's run this with `node app.js`.
 
 We should see:
 
-![created via mongoose](https://i.imgur.com/I0EbPuu.png)
+```sh
+mongo connected:  mongodb://localhost:27017/tweets
+the connection with mongodb is established
+{ likes: 0,
+  sponsored: false,
+  _id: 5e342fc4085fe1e464d8a2f5,
+  title: 'Deep Thoughts',
+  body: 'Friends, I have been navel-gazing',
+  author: 'Karolin',
+  createdAt: 2020-01-31T13:46:44.751Z,
+  updatedAt: 2020-01-31T13:46:44.751Z,
+  __v: 0 }
+mongo disconnected
+```
 
 Timestamps, deleted, and likes had default values, a unique \_id has been generated
 
@@ -394,12 +412,9 @@ Tweet.countDocuments({ likes: { $gte: 20 } }, (err, tweets) => {
 
 We can check out all the things we can do at the [Mongoose API docs](http://mongoosejs.com/docs/api.html)
 
-### Advanced & New!
+### Chaining Queries
 
-Mongoose 5.0.0 just came out on January 17, 2018
-[It has an updated query builder that chains much like jQuery](http://mongoosejs.com/docs/queries.html).
-
-Do a search, limit the number of returned queries to 2, sort them by title
+With newer versions of MongooseJS, we can even chain our queries.  For example, the below code does a search, limits the number of returned queries to 2, sort them by title:
 
 ```js
 Tweet.find({ likes: { $gte: 20 } }, "title -_id")
